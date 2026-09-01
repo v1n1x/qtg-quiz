@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QTG Trainer — Banco de Questões</title>
+  <meta name="description" content="Treinador de questões QTG 2020–2025">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">QTG</div>
+        <div>
+          <h1>QTG Trainer</h1>
+          <p>Prática em blocos de 10 questões • provas 2020–2025</p>
+        </div>
+      </div>
+      <button id="resetBtn" class="ghost" type="button">Reiniciar histórico</button>
+    </header>
+
+    <main>
+      <section id="homeScreen">
+        <div class="panel hero">
+          <div>
+            <h2>Treine pelas provas reais e descubra onde precisa revisar.</h2>
+            <p>Escolha os filtros, responda sem ver o gabarito e receba o resultado ao final do bloco. Seu progresso fica salvo neste navegador.</p>
+            <div class="stats">
+              <div class="stat"><strong id="statAnswered">0</strong><span>questões únicas respondidas</span></div>
+              <div class="stat"><strong id="statAccuracy">0%</strong><span>acurácia acumulada</span></div>
+              <div class="stat"><strong id="statAttempts">0</strong><span>respostas registradas</span></div>
+              <div class="stat"><strong id="statWrong">0</strong><span>questões atualmente erradas</span></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div>
+              <div class="big" id="heroAvailable">223</div>
+              <div>questões objetivas válidas</div>
+            </div>
+            <small>Questões anuladas e discursivas permanecem no banco histórico, mas não entram no modo de múltipla escolha.</small>
+          </div>
+        </div>
+
+        <div class="panel filters">
+          <h3>Montar próximo bloco</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="familyFilter">Família</label>
+              <select id="familyFilter"></select>
+            </div>
+            <div class="field">
+              <label for="normFilter">Norma</label>
+              <select id="normFilter"></select>
+            </div>
+            <div class="field">
+              <label for="yearFilter">Ano</label>
+              <select id="yearFilter"></select>
+            </div>
+            <div class="field">
+              <label for="focusFilter">Foco</label>
+              <select id="focusFilter">
+                <option>Todas</option>
+                <option>Não respondidas</option>
+                <option>Erradas</option>
+              </select>
+            </div>
+          </div>
+          <div class="start-row">
+            <div class="count-note" id="poolCount"></div>
+            <button class="primary" id="startBtn" type="button">Começar 10 questões</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="quizScreen" class="hidden">
+        <div class="panel">
+          <div class="quiz-head">
+            <div>
+              <div id="qCounter" style="font-weight:800"></div>
+              <div id="qMeta" style="font-size:12px;color:var(--muted);margin-top:4px"></div>
+            </div>
+            <div id="qNorms" class="badges"></div>
+          </div>
+          <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+          <div id="questionText" class="question-title"></div>
+          <div id="options" class="options"></div>
+          <div class="quiz-nav">
+            <button id="prevBtn" class="ghost" type="button">Anterior</button>
+            <button id="backHomeBtn" class="ghost" type="button">Sair do bloco</button>
+            <button id="nextBtn" class="primary" type="button">Próxima</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="hidden">
+        <div class="panel">
+          <div class="result-hero">
+            <div class="score-ring" id="scoreRing">
+              <div class="score-content">
+                <strong id="scoreMain">0/10</strong>
+                <span id="scorePct">0% de acertos</span>
+              </div>
+            </div>
+            <div>
+              <h2 id="resultHeadline">Resultado</h2>
+              <p id="resultSub"></p>
+              <div class="result-actions">
+                <button class="primary" id="nextTenBtn" type="button">Próximas 10</button>
+                <button class="ghost" id="retryWrongBtn" type="button">Refazer erradas</button>
+                <button class="ghost" id="resultHomeBtn" type="button">Alterar filtros</button>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="section-title">Desempenho por norma neste bloco</h3>
+          <table class="norm-table">
+            <thead><tr><th>Norma</th><th>Acertos</th><th>%</th></tr></thead>
+            <tbody id="normPerf"></tbody>
+          </table>
+
+          <h3 class="section-title">Revisão das respostas</h3>
+          <div id="reviewList" class="review"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer">Aplicação local • nenhum dado é enviado para servidor • histórico salvo no navegador</div>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden">
+    <div class="modal">
+      <h3>Reiniciar histórico?</h3>
+      <p>Isso apaga o progresso salvo neste navegador: tentativas, acertos e lista de questões erradas.</p>
+      <div class="modal-actions">
+        <button id="cancelReset" class="ghost" type="button">Cancelar</button>
+        <button id="confirmReset" class="primary" type="button">Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
